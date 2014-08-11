@@ -1,0 +1,80 @@
+<div class="row">
+         <div class="col-lg-12">
+             <h1 class="page-header">
+                 Pagos
+             </h1>
+             <ol class="breadcrumb">
+                 <li>
+                     <i class="fa fa-dashboard"></i>  <a>Invio Bank</a>
+                 </li>
+                 <li class="active">
+                     <i class="fa fa-table"></i> Pagos
+                 </li>
+             </ol>
+         </div>
+     </div>
+     <!-- /.row -->
+
+     <div class="row">
+         <div class="col-lg-12">
+             <h2>Pagos por Procesar</h2>
+             <div class="table-responsive">
+                 <label>Obtener pagos para esta fecha: <input type="date" data-bind="value: Date"/></label>   
+                 <table class="table table-bordered table-hover">
+                     <thead>
+                         <tr>
+                             <th>Descripcion del pago</th>
+                             <th>Cantidad</th>
+                             <th>Fecha del pago</th>
+                             <th>Cuenta bancaria de origen</th>
+                             <th>Destino</th>
+                             <th></th>
+                             <th></th>
+                         </tr>
+                     </thead>
+                     <tbody data-bind="foreach: Payments">
+                         <tr>
+                             <td><span data-bind="html: 'asdasd'"></span></td>
+                             <td><span data-bind="html: amount"></span></td>
+                             <td><span data-bind="html: paymentDateFormatted"></span></td>
+                             <td><span data-bind="html: originBankAccount.accountNumber"></span></td>
+                             <td><span data-bind="html: destination.description"></span></td>
+                             <td><button data-bind="visible: !processing(), click: $parent.ProcessPayment" class="btn btn-success">Aprobar</button></td>
+                             <td><button data-bind="visible: !processing(), click: $parent.FailPayment" class="btn btn-danger">Denegar</button></td>
+                         </tr>
+                     </tbody>
+                 </table>
+             </div>
+             
+             <h2>Pagos Procesados</h2>
+             <div class="table-responsive">
+                 <table class="table table-bordered table-hover">
+                     <thead>
+                         <tr>
+                            <th>Descripcion del pago</th>
+                            <th>Cantidad</th>
+                            <th>Fecha de pago</th>
+                            <th>Cuenta de origen</th>
+                            <th>Destino</th>   
+                            <th>Estado</th>                     
+                            <th>Referencia</th>
+                            <th></th>
+                         </tr>
+                     </thead>
+                     <tbody data-bind="foreach: ProcessedPayments">
+                        <tr>
+                            <td><span data-bind="html: 'asd' "></span></td>
+                            <td><span data-bind="html: amount"></span></td>
+                            <td><span data-bind="html: paymentDateFormatted"></span></td>
+                            <td><span data-bind="html: originBankAccount.number"></span></td>
+                            <td><span data-bind="html: destination.description"></span></td>                        
+                            <td><span data-bind="html: status"></span></td>                        
+                            <td><span data-bind="html: reference"></span></td>  
+                            <td><span data-bind="html: reason"></span></td>  
+                        </tr>
+                    </tbody>
+                 </table>
+             </div>
+         </div>
+     </div>
+

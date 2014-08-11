@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="jasmine-1.2.0.js"></script>
+    <script type="text/javascript" src="jasmine.console_reporter.js"></script>
+    <script src="../lib/require/require.js"></script>
+    <script src="../app/requireConfig.js"></script>
+    <script type="text/javascript">
+        var runTests = function (specfiles) {
+            require(specfiles, function () {
+                var consoleReporter = new jasmine.ConsoleReporter();
+                jasmine.getEnv().addReporter(consoleReporter);
+                jasmine.getEnv().execute();
+            });
+        };
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<section class="login-page">
+    <div class="login-form">
+        <div class="login-form-header">
+            <div class="content"><span>Ingresar Invio Bank</span></div>
+        </div>
+        <div class="form">
+            <img src="img/invio_logo.png" class="logo" alt=""/>
+            <form id="login" data-bind="submit: authenticate">
+                <div data-bind="validationElement: email" class="form-group">
+                    <input id="user-email" data-bind="value: email, disable: loginInProgress" type="text" class="form-control" placeholder="Correo" />
+                </div>
+                <div data-bind="validationElement: password"  class="form-group">
+                    <input id="user-password" data-bind="value: password, disable: loginInProgress" type="password" class="form-control" placeholder="Contrase&ntilde;a" />    
+                </div>
+                <div class="forgot-password"><a>Resetear Contrase&ntilde;a</a></div>
+                <input id="authenticate-user" type="submit" class="button light-blue-shadow" data-bind="disable: loginInProgress" value="Ingresar" />
+                <div class="loading" data-bind="visible: loginInProgress" >Autenticando...</div>
+            </form>
+        </div>
+    </div>
+</section>
