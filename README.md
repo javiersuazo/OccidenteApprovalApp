@@ -1,3 +1,3 @@
 #InvioBankApiSampleJavascript
 
-Live Sample: http://inviobankapiclient.herokuapp.com/
+Live Sample: http://occidentebankaccountapproval.apphb.com/index.html
