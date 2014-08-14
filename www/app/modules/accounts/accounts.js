@@ -1,10 +1,10 @@
 ﻿define(["knockout", "underscore", "services/dataContext", "plugins/router", "alertify", "bootstrap"],
-    function (ko, _, dataContext, router,alertify) {
+    function (ko, _, dataContext, router, alertify) {
         var Accounts = function () {
-            
+
             var pendingAccounts = ko.observableArray();
             var currentDetails = ko.observable();
-            
+
             var getPendingAccounts = function () {
                 pendingAccounts.removeAll();
                 dataContext.PendingAccounts.GetAll()
@@ -15,20 +15,39 @@
                             });
                             pendingAccounts.push(r);
                         });
-                    }).fail(function() {
+                    }).fail(function () {
                         router.navigate('/login');
                     });
             };
-            
+
             var approvedAccounts = function (pendingAccount) {
-                var reference = alertify.prompt("Transaccion de Referencia #");
-                dataContext.PendingAccounts.ApprovedAcounts(pendingAccount.id, reference).done(getPendingAccounts);
+                alertify.prompt("Transaccion de Referencia #", function (e, str) {
+                    if (e) {
+                        dataContext.PendingAccounts.ApprovedAcounts(pendingAccount.id, str).done(getPendingAccounts);
+                    }
+                }, "");
             };
 
             var denyAccounts = function (pendingAccount) {
-                var reference = alertify.prompt("Transaccion de Referencia #");
-                var reason = alertify.prompt("Razon para denegar");
-                dataContext.PendingAccounts.DenialAccount(pendingAccount.id, reason, reference).done(getPendingAccounts);
+                var reference = "",
+                    reason = "";
+
+                alertify.prompt("Transaccion de Referencia #", function (e, str) {
+                    if (e) {
+                        reference = str;
+                        alertify.prompt("Razon para denegar", function (e, str) {
+                            if (e) {
+                                reason = str;
+                                if (reference !== "" && reason !== "") {
+                                    dataContext.PendingAccounts.DenialAccount(pendingAccount.id, reason, reference).done(getPendingAccounts);
+                                } else {
+                                    alertify.alert("No puede enviar ninguno de los campos requeridos vacios.");
+                                }
+                            }
+                        }, "");
+                    }
+                }, "");
+
             };
 
             var showDetails = function (approvalRequest) {
@@ -36,7 +55,7 @@
                     currentDetails(response);
                 });
             };
-            
+
             var humanize = function (fieldName) {
                 return fieldName
                     .replace(/([A-Z])/g, ' $1')
@@ -45,7 +64,7 @@
                     })
                     .replace(/^./, function (str) { return str.toUpperCase(); });
             };
-            
+
             return {
                 viewUrl: "modules/accounts/accounts.html",
                 pendingAccounts: pendingAccounts,
@@ -54,11 +73,11 @@
                 humanize: humanize,
                 ShowDetails: showDetails,
                 CurrentDetails: currentDetails,
-                attached : function() {
+                attached: function () {
                     getPendingAccounts();
                 }
-                    
+
             };
         };
         return Accounts;
-});
+    });
