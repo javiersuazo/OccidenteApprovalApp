@@ -4,9 +4,12 @@
 
             var pendingAccounts = ko.observableArray();
             var currentDetails = ko.observable();
-
+            var isLoading = ko.observable(true);
+            var isLoadingDetails = ko.observable(true);
+            
             var getPendingAccounts = function () {
                 pendingAccounts.removeAll();
+                isLoading(true);
                 dataContext.PendingAccounts.GetAll()
                     .done(function (response) {
                         $.each(response.approvalRequests, function (index, r) {
@@ -15,6 +18,7 @@
                             });
                             pendingAccounts.push(r);
                         });
+                        isLoading(false);
                     }).fail(function () {
                         router.navigate('/login');
                     });
@@ -51,8 +55,10 @@
             };
 
             var showDetails = function (approvalRequest) {
+                isLoadingDetails(true);
                 dataContext.PendingAccounts.Details(approvalRequest.id).done(function (response) {
                     currentDetails(response);
+                    isLoadingDetails(false);
                 });
             };
 
@@ -70,9 +76,12 @@
                 pendingAccounts: pendingAccounts,
                 ApprovedAccounts: approvedAccounts,
                 DenyAccounts: denyAccounts,
+                GetPendingAccounts : getPendingAccounts,
                 humanize: humanize,
                 ShowDetails: showDetails,
                 CurrentDetails: currentDetails,
+                isLoading: isLoading,
+                isLoadingDetails : isLoadingDetails,
                 attached: function () {
                     getPendingAccounts();
                 }
