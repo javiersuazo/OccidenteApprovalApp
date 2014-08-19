@@ -52,7 +52,7 @@
             </div>
             <div class="modal-body">
                 <div class="loading" data-bind="visible: isLoadingDetails()">Cargando detalles...</div>
-                <table data-bind="visible: !isLoadingDetails()" class="table table-bordered table-hover" data-bind="    with: CurrentDetails()" style="margin-bottom: 50px">
+                <table data-bind="visible: !isLoadingDetails(), with: CurrentDetails" class="table table-bordered table-hover" style="margin-bottom: 50px">
                     <tbody>
                         <tr>
                             <td><span>Numero de cuenta</span></td>
